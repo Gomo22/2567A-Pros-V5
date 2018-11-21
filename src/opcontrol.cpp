@@ -13,10 +13,12 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+ Controller controller(CONTROLLER_MASTER);
 void opcontrol() {
 while(true)
 	{
-
+		driveOP();
+    shooterOP();
 		delay(20);
 	}
 }

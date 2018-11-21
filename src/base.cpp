@@ -15,17 +15,34 @@ void driveOP()
   rightDrive1.move(controller.get_analog(ANALOG_RIGHT_Y));
 }
 
-void drive(int distance)
+void driveAsync(int distance) // will not block program (multi tasking)
 {
   leftDrive.move_relative(distance, maxBaseVelocity);
   leftDrive1.move_relative(distance, maxBaseVelocity);
   rightDrive.move_relative(distance, maxBaseVelocity);
   rightDrive1.move_relative(distance, maxBaseVelocity);
+}
 
+
+void drive(int distance) // will block drive(no multi tasking )
+{
+  driveAsync(distance);
 while(!((leftDrive.get_position() < distance+3) && (leftDrive.get_position() > distance-3)))
   {
     delay(2);
   }
+}
+
+
+void turnAsync(int degrees)
+{
+  double degreesToEncoder = 3.6;
+  int Target = degrees*degreesToEncoder;
+
+  leftDrive.move_relative(Target, maxBaseVelocity);
+  leftDrive1.move_relative(Target, maxBaseVelocity);
+  rightDrive.move_relative(Target, -maxBaseVelocity);
+  rightDrive1.move_relative(Target, -maxBaseVelocity);
 }
 
 void turn(int degrees)
