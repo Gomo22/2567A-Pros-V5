@@ -13,7 +13,5 @@
  */
 void autonomous()
 {
-drive(40);
-shoot();
-
+drive(12);
 }

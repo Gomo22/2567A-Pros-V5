@@ -4,5 +4,6 @@
 void driveOP();
 void drive(int distance);
 void turn(int degrees);
+void turnAsync(int degrees);
 void driveAsync(int distance );
 #endif
