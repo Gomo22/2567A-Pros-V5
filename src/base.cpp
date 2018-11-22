@@ -49,12 +49,12 @@ void drive(int distance) // will block drive(no multi tasking )
 
 void turnAsync(int degrees)
 {
-  double degreesToEncoder = 5.5;
+  double degreesToEncoder = 5.2;
   int Target = degrees*degreesToEncoder;
 
   leftDrive.move_relative(Target, lowBaseVelocity);
   rightDrive.move_relative(-Target, lowBaseVelocity);
-  setTarget = degrees;
+  setTarget = Target;
 }
 
 void turn(int degrees)
