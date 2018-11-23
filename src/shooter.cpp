@@ -1,17 +1,18 @@
 #include "main.h"
+static int maxPower = 200;
+static int pullback = 600;
+Motor shooter(3, MOTOR_GEARSET_36 , 0, MOTOR_ENCODER_DEGREES);
 
-Motor shooter(5, MOTOR_GEARSET_36 , 0, MOTOR_ENCODER_DEGREES);
-
-void shooterPower(int power)
+void shooterPower()
 {
-  shooter.move(power);
+  shooter.move_absolute(pullback, maxPower);
 }
 
 void shooterOP()
 {
   if(controller.get_digital(DIGITAL_L1))
   {
-  shooter.move(127);
+  shooter.move(maxPower);
   }
   else
   {
@@ -21,6 +22,5 @@ void shooterOP()
 
 void shoot()
 {
-  shooterPower(127);
-  delay(850);
+  shooterPower();
 }

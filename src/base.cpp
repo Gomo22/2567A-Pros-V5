@@ -7,7 +7,13 @@ static int setdistance = 0;
 static int setTarget = 0;
 
 Motor leftDrive (1, E_MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
-Motor rightDrive (3, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
+Motor rightDrive (2, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
+
+void reset()
+{
+leftDrive.tare_position();
+rightDrive.tare_position();
+}
 
 void untilAtDistance()
 {
@@ -34,6 +40,7 @@ void driveOP()
 void driveAsync(int distance) // will not block program (multi tasking)
 {
   float inches = (360/14.20)*distance;
+  reset();
   leftDrive.move_relative(inches, midBasesVelocity);
   rightDrive.move_relative(inches, midBasesVelocity);
   setdistance = inches;
@@ -51,7 +58,7 @@ void turnAsync(int degrees)
 {
   double degreesToEncoder = 5.2;
   int Target = degrees*degreesToEncoder;
-
+  reset();
   leftDrive.move_relative(Target, lowBaseVelocity);
   rightDrive.move_relative(-Target, lowBaseVelocity);
   setTarget = Target;
