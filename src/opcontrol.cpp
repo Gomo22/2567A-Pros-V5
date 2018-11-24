@@ -19,6 +19,7 @@ while(true)
 	{
 		driveOP();
     shooterOP();
+    intakeOP();
 		delay(20);
 	}
 }
