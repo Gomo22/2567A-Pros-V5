@@ -1,14 +1,25 @@
 #include "main.h"
 static int maxPower = 200;
 static int pullback = 600;
-Motor puncher(3, MOTOR_GEARSET_36 , 0, MOTOR_ENCODER_DEGREES);
+static int setPullback = 0;
+Motor puncher(3, E_MOTOR_GEARSET_18 , 0, MOTOR_ENCODER_DEGREES);
 
-void shooterPower()
+void untilAtPullback()
 {
-  puncher.move_absolute(pullback, maxPower);
+  while(!((puncher.get_position() < setPullback+3) && (puncher.get_position() > setPullback-3)))
+    {
+      delay(20);
+    }
 }
 
-void shooterOP()
+void puncherPower()
+{
+  puncher.tare_position();
+  puncher.move_absolute(pullback, maxPower);
+  setPullback = pullback;
+}
+
+void puncherOP()
 {
   if(controller.get_digital(DIGITAL_L1))
   {
@@ -22,6 +33,11 @@ void shooterOP()
 
 void shoot()
 {
-  puncher.tare_position();
-  shooterPower();
+  puncherPower();
+  untilAtPullback();
+}
+
+void shootAsync()
+{
+  puncherPower();
 }

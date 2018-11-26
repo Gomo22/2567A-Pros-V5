@@ -18,7 +18,7 @@ void opcontrol() {
 while(true)
 	{
 		driveOP();
-    shooterOP();
+    puncherOP();
     intakeOP();
 		delay(20);
 	}

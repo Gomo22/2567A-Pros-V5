@@ -1,8 +1,10 @@
 #ifndef _SHOOTER_H_
 #define _SHOOTER_H_
 
-void shooterOP();
-void shooterPower(int power);
+void puncherOP();
+void puncherPower();
 void shoot();
+void shootAsync();
+void untilAtPullback();
 
 #endif

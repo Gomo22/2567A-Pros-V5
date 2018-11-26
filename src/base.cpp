@@ -46,13 +46,11 @@ void driveAsync(int distance) // will not block program (multi tasking)
   setdistance = inches;
 }
 
-
 void drive(int distance) // will block drive(no multi tasking )
 {
   driveAsync(distance);
   untilAtDistance();
 }
-
 
 void turnAsync(int degrees)
 {
