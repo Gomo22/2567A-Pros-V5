@@ -37,7 +37,7 @@ void driveOP()
   rightDrive.move(controller.get_analog(ANALOG_RIGHT_Y));
 }
 
-void driveAsync(int distance) // will not block program (multi tasking)
+void driveAsync(int distance) // will not block program (multi tasking) //use whewn have sensors not encoders 
 {
   float inches = (360/14.20)*distance;
   reset();
