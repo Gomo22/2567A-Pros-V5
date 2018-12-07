@@ -2,6 +2,9 @@
 
 void autonomous()
 {
+  LV_IMG_DECLARE(drow);
+  lv_obj_t * imgDrow = lv_img_create(lv_scr_act(), NULL);
+  lv_img_set_src(imgDrow, &drow);
 //drives to cap and flips it
 suck(800); //run suck before drive to have it run while drive
 drive(40);
@@ -9,6 +12,6 @@ drive(40);
 drive(-24);
 turn(45);
 //drives to cap and flips it
-drive(24);
 suck(800);
+drive(24);
 }
