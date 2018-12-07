@@ -38,6 +38,7 @@
 #include "base.hpp"
 #include "shooter.hpp"
 #include "intake.hpp"
+#include "expansion.hpp"
 /**
  * You should add more #includes here
  */
