@@ -39,6 +39,7 @@
 #include "shooter.hpp"
 #include "intake.hpp"
 #include "expansion.hpp"
+#include "claw.hpp"
 /**
  * You should add more #includes here
  */
