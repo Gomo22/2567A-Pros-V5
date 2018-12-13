@@ -16,15 +16,15 @@ void distanceValues()
 
 bool shootLast = false;
 
-static lv_res_t btn_rel_gyro(lv_obj_t * btn)
-{
-	resetGyro();
-	return LV_RES_OK;
-}
+//static lv_res_t btn_rel_gyro(lv_obj_t * btn)
+//{
+//	resetGyro();
+//	return LV_RES_OK;
+//}
 
 static lv_res_t btn_rel_encoder(lv_obj_t * btn)
 {
-	tareDrive();
+	resetDrive();
 	return LV_RES_OK;
 }
 
