@@ -16,8 +16,8 @@ void blueBackCaps()
 
 void autonomous()
 {
-  LV_IMG_DECLARE(drow);
-  lv_obj_t * imgDrow = lv_img_create(lv_scr_act(), NULL);
-  lv_img_set_src(imgDrow, &drow);
+  //LV_IMG_DECLARE(drow);
+  //lv_obj_t * imgDrow = lv_img_create(lv_scr_act(), NULL);
+  //lv_img_set_src(imgDrow, &drow);
 
 }

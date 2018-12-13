@@ -4,7 +4,7 @@ static int fastExpand = 100;
 static int slowExpand = 50;
 static int lowPost = 300;
 
-Motor lift(4, E_MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
+Motor lift(8, E_MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
 
 void resetLift()
 {

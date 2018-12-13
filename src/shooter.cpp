@@ -2,7 +2,7 @@
 static int maxPower = 200;
 static int pullback = 600;
 static int setPullback = 0;
-Motor puncher(3, E_MOTOR_GEARSET_18 , 0, MOTOR_ENCODER_DEGREES);
+Motor puncher(6, E_MOTOR_GEARSET_18 , 0, MOTOR_ENCODER_DEGREES);
 
 void untilAtPullback()
 {
@@ -21,7 +21,7 @@ void puncherPower()
 
 void puncherOP()
 {
-  if(controller.get_digital(DIGITAL_L1))
+  if(controller.get_digital(DIGITAL_UP))
   {
   puncher.move(maxPower);
   }
