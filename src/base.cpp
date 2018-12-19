@@ -5,7 +5,6 @@ static int medBaseVelocity = 150;
 static int halfMaxBaseVelocity = 100;
 static int slowBaseVelocity = 50;
 static int brakeBaseVelocity = -20;
-
 //DEFINING MOTORS
 Motor leftDrive(1, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
 Motor leftDrive1(2, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
@@ -23,8 +22,14 @@ void driveOP()
   rightDrive1.move(controller.get_analog(ANALOG_RIGHT_Y));
 }
 
+int getDistance()
+{
+  return leftDrive.get_position();
+}
+
 void resetDrive()
 {
+
   leftDrive.tare_position();
   leftDrive1.tare_position();
   rightDrive.tare_position();

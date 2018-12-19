@@ -18,7 +18,6 @@
 
 #ifndef _PROS_API_H_
 #define _PROS_API_H_
-#include "pros/apix.h"
 #ifdef __cplusplus
 #include <cerrno>
 #include <cmath>

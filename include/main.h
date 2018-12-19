@@ -40,6 +40,7 @@
 #include "intake.hpp"
 #include "expansion.hpp"
 #include "claw.hpp"
+#include "pros/apix.h"
 /**
  * You should add more #includes here
  */
