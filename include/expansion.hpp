@@ -5,5 +5,5 @@ void resetLift();
 void liftOP();
 void expand(bool up, int height);
 void lowCap();
-
+int getLiftRPM();
 #endif

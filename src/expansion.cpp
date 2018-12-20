@@ -11,6 +11,11 @@ void resetLift()
   lift.tare_position();
 }
 
+int getLiftRPM()
+{
+  return lift.get_actual_velocity();
+}
+
 void liftOP()
 {
   if(controller.get_digital(DIGITAL_L1))

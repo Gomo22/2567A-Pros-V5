@@ -12,7 +12,24 @@ Motor leftDrive1(2, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
 Motor rightDrive(3, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 Motor rightDrive1(4, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
+void drivePID(int inches)
+{
+  int speed;
+  double kd = 0;
+  double kp = 0;
+  int error;
+  int derivative;
+  int previousError;
+  int distance = inches*(360/14.125);
 
+
+
+  //sets clamp for over wind up
+  if(speed > 200)
+  speed = maxBaseVelocity;
+  if(speed < -200)
+  speed = -maxBaseVelocity;
+}
 
 void driveOP()
 {
@@ -20,6 +37,11 @@ void driveOP()
   leftDrive1.move(controller.get_analog(ANALOG_LEFT_Y));
   rightDrive.move(controller.get_analog(ANALOG_RIGHT_Y));
   rightDrive1.move(controller.get_analog(ANALOG_RIGHT_Y));
+}
+
+int getBatteryLevel()
+{
+  return battery::get_capacity();
 }
 
 int getDistance()

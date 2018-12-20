@@ -10,6 +10,11 @@ void suck(int rotations)
   intake.move_relative(rotations, maxIntakeVelocity);
 }
 
+int getIntakeMode()
+{
+  return intake.get_direction();
+}
+
 void intakeOP()
 {
   if(controller.get_digital(DIGITAL_Y))

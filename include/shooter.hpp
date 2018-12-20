@@ -6,5 +6,7 @@ void puncherPower();
 void shoot();
 void shootAsync();
 void untilAtPullback();
+void resetPuncher();
+int getPuncher();
 
 #endif

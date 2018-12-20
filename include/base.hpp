@@ -5,6 +5,8 @@ void driveOP();
 void drive(int inches);
 void driveMax(int inches);
 void turn(int degrees);
+void resetDrive();
 int getDistance();
+int getBatteryLevel();
 
 #endif

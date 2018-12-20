@@ -12,9 +12,14 @@ void untilAtPullback()
     }
 }
 
-void puncherPower()
+void resetPuncher()
 {
   puncher.tare_position();
+}
+
+void puncherPower()
+{
+  resetPuncher();
   puncher.move_absolute(pullback, maxPower);
   setPullback = pullback;
 }
@@ -29,6 +34,11 @@ void puncherOP()
   {
   puncher.move(0);
   }
+}
+
+int getPuncher()
+{
+  return puncher.get_position();
 }
 
 void shoot()

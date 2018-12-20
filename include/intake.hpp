@@ -3,5 +3,6 @@
 
 void intakeOP();
 void suck(int rotations);
+int getIntakeMode();
 
 #endif
