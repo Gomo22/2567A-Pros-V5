@@ -15,20 +15,62 @@ Motor rightDrive1(4, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 void drivePID(int inches)
 {
   int speed;
-  double kd = 0;
-  double kp = 0;
+  double kd = 0; //2x kp
+  double kp = .1;
   int error;
   int derivative;
-  int previousError;
+  int prevError;
   int distance = inches*(360/14.125);
-
-
-
+  while(leftDrive.get_position() > distance + 5 || leftDrive.get_position() < distance - 5)
+    {
+  error = distance - leftDrive.get_position();
+  speed = error * kp;
+  derivative = prevError - error;
+  prevError = error;
+  speed = (error*kp) + (derivative*kd);
   //sets clamp for over wind up
   if(speed > 200)
   speed = maxBaseVelocity;
   if(speed < -200)
   speed = -maxBaseVelocity;
+  left(speed);
+  right(speed);
+    }
+}
+
+
+void turnPID(int deg)
+{
+
+  int speed;
+  // both should be higher
+  double kd = 0; //2x kp
+  double kp = .1;
+  int error;
+  int derivative;
+  int prevError;
+  int degrees;
+  int target = deg*2.5;
+while(leftDrive.get_position() > target + 5 || leftDrive.get_position() < target - 5)
+  {
+  error = target - ((rightDrive.get_position() - leftDrive.get_position())/2);
+  speed = error * kp;
+  derivative = prevError - error;
+  prevError = error;
+  speed = (error*kp) + (derivative*kd);
+  left(-speed);
+  right(speed);
+  }
+}
+
+void left(int vel){
+  leftDrive.move(vel);
+  leftDrive1.move(vel);
+}
+
+void right(int vel){
+  rightDrive.move(vel);
+  rightDrive1.move(vel);
 }
 
 void driveOP()
