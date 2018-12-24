@@ -35,12 +35,11 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
-#include "base.hpp"
 #include "shooter.hpp"
 #include "intake.hpp"
-#include "expansion.hpp"
+#include "expanse.hpp"
 #include "claw.hpp"
-#include "pros/apix.h"
+#include "base.hpp"
 /**
  * You should add more #includes here
  */
@@ -59,7 +58,7 @@
  using namespace pros::literals;
 // using namespace okapi;
 extern Controller controller;
-extern Controller controller1;
+extern Controller controller2;
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a
