@@ -12,4 +12,6 @@ void right(int vel);
 void left(int vel);
 int getDistance();
 int getBatteryLevel();
+int getLeftEfficiency();
+int getRightEfficiency();
 #endif

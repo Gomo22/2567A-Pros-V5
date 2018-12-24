@@ -14,7 +14,8 @@
  * task, not resume it from where it left off.
  */
 Controller controller(CONTROLLER_MASTER);
-Controller controller1(CONTROLLER_PARTNER);
+Controller controller2(CONTROLLER_PARTNER);
+
 static lv_res_t btn_rel_puncher(lv_obj_t * btn)
 {
 	resetPuncher();
@@ -49,12 +50,16 @@ void opcontrol() {
   lv_obj_align(labellift, labelDrive, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
   lv_label_set_text(labelDrive, "Lift RPM");
 
-  lv_obj_t * labelintake = lv_label_create(lv_scr_act(), NULL);
-  lv_obj_align(labelintake, labellift, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
-  lv_label_set_text(labelintake, "Intake Mode");
+  lv_obj_t * labelrightEfficiency = lv_label_create(lv_scr_act(), NULL);
+  lv_obj_align(labelrightEfficiency, labellift, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
+  lv_label_set_text(labelrightEfficiency, "rightEfficiency");
+
+	lv_obj_t * labelleftEfficiency = lv_label_create(lv_scr_act(), NULL);
+	lv_obj_align(labelleftEfficiency, labelrightEfficiency, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
+	lv_label_set_text(labelleftEfficiency, "leftEfficiency");
 
   lv_obj_t * btnpuncher = lv_btn_create(lv_scr_act(), NULL);
-  lv_obj_align(btnpuncher, labelintake, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
+  lv_obj_align(btnpuncher, labelrightEfficiency, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
   lv_btn_set_action(btnpuncher,LV_BTN_ACTION_CLICK, btn_rel_puncher);
   lv_obj_t * label = lv_label_create(btnpuncher, NULL);
   lv_label_set_text(label, "Reset\nPuncher");
@@ -69,22 +74,27 @@ void opcontrol() {
     std::string charstring = "Battery Level:" + std::to_string(getBatteryLevel());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labelbattery, lblstring);
-    charstring = "Puncher:" + std::to_string(getPuncher());
+    charstring = "Puncher: " + std::to_string(getPuncher());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labelpuncher, lblstring);
-    charstring = "FLeft:" + std::to_string(getDistance());
+    charstring = "FLeft: " + std::to_string(getDistance());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labelDrive, lblstring);
-    charstring = "LiftRPM:" + std::to_string(getLiftRPM());
+    charstring = "LiftRPM: " + std::to_string(getLiftRPM());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labellift, lblstring);
-    charstring = "Intake Mode:" + std::to_string(getIntakeMode());
+    charstring = "RightEfficiency: " + std::to_string(getRightEfficiency());
     strcpy(lblstring, charstring.c_str());
-    lv_label_set_text(labelintake, lblstring);
+    lv_label_set_text(labelrightEfficiency, lblstring);
+		charstring = "LeftEfficiency: " + std::to_string(getLeftEfficiency());
+    strcpy(lblstring, charstring.c_str());
+    lv_label_set_text(labelleftEfficiency, lblstring);
 
 		driveOP();
     puncherOP();
     intakeOP();
+		liftOP();
+		clawOP();
 		delay(20);
 	}
 }

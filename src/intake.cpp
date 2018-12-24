@@ -1,13 +1,14 @@
 #include "main.h"
 
-Motor intake(5, E_MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
+Motor intake(15, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
 static int maxIntakeVelocity = 200;
+static int midIntakeVelocity = 100;
 
 void suck(int rotations)
 {
-  intake.tare_position();
   intake.move_relative(rotations, maxIntakeVelocity);
+  intake.tare_position();
 }
 
 int getIntakeMode()
@@ -17,16 +18,17 @@ int getIntakeMode()
 
 void intakeOP()
 {
-  if(controller.get_digital(DIGITAL_Y))
+  if(controller.get_digital(DIGITAL_R2))
   {
-  intake.move(maxIntakeVelocity);
+  intake.move(midIntakeVelocity);
   }
-  else if(controller.get_digital(DIGITAL_A))
+  else if(controller.get_digital(DIGITAL_R1))
   {
-  intake.move(-maxIntakeVelocity);
+  intake.move(-midIntakeVelocity);
   }
   else
   {
     intake.move(0);
   }
+
 }
