@@ -10,6 +10,7 @@ void drivePID(int inches);
 void turnPID(int deg);
 void right(int vel);
 void left(int vel);
+void setCurrent(int current);
 int getDistance();
 int getBatteryLevel();
 int getLeftEfficiency();

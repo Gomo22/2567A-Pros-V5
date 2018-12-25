@@ -16,16 +16,17 @@ void skills()
 void blueFront()
 {
   shoot();
+  suck(2000);
   drivePID(56);
-  suck(300);
-  drivePID(-24);
-  turnPID(90);
+  suck(400);
+  drivePID(-12);
+  turnPID(-90);
   suck(1000);
   drivePID(24);
-
 }
 
 void autonomous()
 {
- drivePID(56);
+turnPID(90);
+shoot();
 }
