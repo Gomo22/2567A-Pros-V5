@@ -63,13 +63,16 @@ void disabled() {}
  */
 void competition_initialize() {
   lv_obj_t * btnBlueFlag = lv_btn_create(lv_scr_act(), NULL);
-  lv_btn_set_action(btnBlueFlag ,LV_BTN_ACTION_CLICK, btn_rel_blueFlag);
+  lv_btn_set_action(btnBlueFlag ,LV_BTN_ACTION_PR, btn_rel_blueFlag);
+  lv_obj_set_free_num(btnBlueFlag, 1);
+  lv_btn_set_toggle(btnBlueFlag, true);
+  lv_btn_set_action(btnBlueFlag, LV_BTN_ACTION_PR, btn_rel_blueFlag);
   lv_obj_t * label = lv_label_create(btnBlueFlag, NULL);
   lv_label_set_text(label, "Blue\nFront");
 
   lv_obj_t * btnredFlag = lv_btn_create(lv_scr_act(), NULL);
   lv_obj_align(btnredFlag, btnBlueFlag, LV_ALIGN_OUT_RIGHT_BOTTOM, 0, 0);
-  lv_btn_set_action(btnredFlag, LV_BTN_ACTION_CLICK, btn_rel_redFlag);
+  lv_btn_set_action(btnredFlag, LV_BTN_ACTION_PR, btn_rel_redFlag);
   label = lv_label_create(btnredFlag, NULL);
   lv_label_set_text(label, "Red\nFront");
 }

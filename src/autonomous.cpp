@@ -1,5 +1,10 @@
 #include "main.h"
 
+//jumpers
+ADIDigitalIn autonClose('B');
+ADIDigitalIn autonFar('C');
+ADIDigitalIn mirror('A');
+
 void skills()
 {
   //drives to cap and flips it
@@ -13,7 +18,12 @@ void skills()
   drive(24);
 }
 
-void blueFront()
+void back()
+{
+  shoot();
+}
+//program red first then tweak blue if it doesnt look. look at micha's repo for the vartion of each side
+void front()
 {
   shoot();
   suck(2000);
@@ -27,6 +37,16 @@ void blueFront()
 
 void autonomous()
 {
-turnPID(90);
-shoot();
+  if(autonClose.get_value())
+  {
+    front();
+  }
+  else if(autonFar.get_value())
+  {
+    back();
+  }
+  else
+  {
+    skills();
+  }
 }

@@ -28,11 +28,11 @@ void driveOP()
 
   if(count == 1)
   {
-  setCurrent(2500);
-  leftDrive.move(controller.get_analog(ANALOG_LEFT_Y));
-  leftDrive1.move(controller.get_analog(ANALOG_LEFT_Y));
-  rightDrive.move(controller.get_analog(ANALOG_RIGHT_Y));
-  rightDrive1.move(controller.get_analog(ANALOG_RIGHT_Y));
+    setCurrent(2500);
+    leftDrive.move(controller.get_analog(ANALOG_LEFT_Y));
+    leftDrive1.move(controller.get_analog(ANALOG_LEFT_Y));
+    rightDrive.move(controller.get_analog(ANALOG_RIGHT_Y));
+    rightDrive1.move(controller.get_analog(ANALOG_RIGHT_Y));
   }
 
   if(count == 2)
@@ -84,22 +84,25 @@ void drivePID(int inches)
   int distance = inches*(360/14.125);
   while(leftDrive.get_position() < distance - 10 || leftDrive.get_position() > distance + 10)
     {
-  setCurrent(1000);
-  error = distance - leftDrive.get_position();
-  derivative = prevError - error;
-  prevError = error;
-  speed = error*kp + derivative*kd;
-//iniates drive motors
-  left(speed);
-  right(speed);
-  printf("%d\n", error);
-  delay(20);
+      setCurrent(1000);
+      error = distance - leftDrive.get_position();
+      derivative = prevError - error;
+      prevError = error;
+      speed = error*kp + derivative*kd;
+      //iniates drive motors
+      left(speed);
+      right(speed);
+      printf("%d\n", error);
+      delay(20);
     }
 }
 
 void turnPID(int deg)
 {
-
+  if(mirror.get_value())
+  {
+    deg = -deg;
+  }
   int speed;
   // both should be higher
   double kd = 3.7; //2x kp
