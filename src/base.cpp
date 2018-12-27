@@ -29,6 +29,10 @@ void driveOP()
   if(count == 1)
   {
     setCurrent(2500);
+    leftDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+    leftDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
     leftDrive.move(controller.get_analog(ANALOG_LEFT_Y));
     leftDrive1.move(controller.get_analog(ANALOG_LEFT_Y));
     rightDrive.move(controller.get_analog(ANALOG_RIGHT_Y));
@@ -37,7 +41,12 @@ void driveOP()
 
   if(count == 2)
   {
+
     setCurrent(2500);
+    leftDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+    leftDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
     leftDrive.move(-controller.get_analog(ANALOG_RIGHT_Y));
     leftDrive1.move(-controller.get_analog(ANALOG_RIGHT_Y));
     rightDrive.move(-controller.get_analog(ANALOG_LEFT_Y));
@@ -114,16 +123,16 @@ void turnPID(int deg)
   int target = deg*3.29;
 while(leftDrive.get_position() > target - 12 || leftDrive.get_position() < target + 12)
   {
-  setCurrent(400);
-  error = target - ((rightDrive.get_position() - leftDrive.get_position())/2);
-  speed = error * kp;
-  derivative = prevError - error;
-  prevError = error;
-  speed = (error*kp) + (derivative*kd);
-  left(-speed);
-  right(speed);
-  printf("%d\n", error);
-  delay(20);
+    setCurrent(400);
+    error = target - ((rightDrive.get_position() - leftDrive.get_position())/2);
+    speed = error * kp;
+    derivative = prevError - error;
+    prevError = error;
+    speed = (error*kp) + (derivative*kd);
+    left(-speed);
+    right(speed);
+    printf("%d\n", error);
+    delay(20);
   }
 }
 

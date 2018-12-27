@@ -7,15 +7,7 @@ ADIDigitalIn mirror('A');
 
 void skills()
 {
-  //drives to cap and flips it
-  suck(800); //run suck before drive to have it run while drive
-  drive(40);
-  //reverse and turn to next cap
-  drive(-24);
-  turn(45);
-  //drives to cap and flips it
-  suck(800);
-  drive(24);
+shoot();
 }
 
 void back()
@@ -36,7 +28,7 @@ void front()
 }
 
 void autonomous()
-{
+{ /*
   if(autonClose.get_value())
   {
     front();
@@ -48,5 +40,8 @@ void autonomous()
   else
   {
     skills();
-  }
+  } */
+
+  drivePID(56);
+  drivePID(-56);
 }
