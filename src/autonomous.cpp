@@ -17,14 +17,9 @@ void back()
 //program red first then tweak blue if it doesnt look. look at micha's repo for the vartion of each side
 void front()
 {
-  shoot();
-  suck(2000);
-  drivePID(56);
-  suck(400);
-  drivePID(-12);
-  turnPID(-90);
-  suck(1000);
-  drivePID(24);
+  ballIn(2000);
+  drivePID(48);
+  drivePID(-24);
 }
 
 void autonomous()
@@ -41,7 +36,10 @@ void autonomous()
   {
     skills();
   } */
+turnPID(90);
+shoot();
+ballIn(2000);
+drivePID(-56);
 
-  drivePID(56);
-  drivePID(-56);
+
 }
