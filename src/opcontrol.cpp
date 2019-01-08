@@ -50,16 +50,8 @@ void opcontrol() {
   lv_obj_align(labellift, labelDrive, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
   lv_label_set_text(labelDrive, "Lift RPM");
 
-  lv_obj_t * labelrightEfficiency = lv_label_create(lv_scr_act(), NULL);
-  lv_obj_align(labelrightEfficiency, labellift, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
-  lv_label_set_text(labelrightEfficiency, "rightEfficiency");
-
-	lv_obj_t * labelleftEfficiency = lv_label_create(lv_scr_act(), NULL);
-	lv_obj_align(labelleftEfficiency, labelrightEfficiency, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
-	lv_label_set_text(labelleftEfficiency, "leftEfficiency");
-
   lv_obj_t * btnpuncher = lv_btn_create(lv_scr_act(), NULL);
-  lv_obj_align(btnpuncher, labelrightEfficiency, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
+  lv_obj_align(btnpuncher, labellift, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
   lv_btn_set_action(btnpuncher,LV_BTN_ACTION_CLICK, btn_rel_puncher);
   lv_obj_t * label = lv_label_create(btnpuncher, NULL);
   lv_label_set_text(label, "Reset\nPuncher");
@@ -83,12 +75,7 @@ void opcontrol() {
     charstring = "LiftRPM: " + std::to_string(getLiftRPM());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labellift, lblstring);
-    charstring = "RightEfficiency: " + std::to_string(getRightEfficiency());
-    strcpy(lblstring, charstring.c_str());
-    lv_label_set_text(labelrightEfficiency, lblstring);
-		charstring = "LeftEfficiency: " + std::to_string(getLeftEfficiency());
-    strcpy(lblstring, charstring.c_str());
-    lv_label_set_text(labelleftEfficiency, lblstring);
+
 
 		driveOP();
     puncherOP();

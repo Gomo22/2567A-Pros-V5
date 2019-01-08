@@ -4,26 +4,25 @@
 ADIDigitalIn autonClose('B');
 ADIDigitalIn autonFar('C');
 ADIDigitalIn mirror('A');
+ADIDigitalIn skill('D');
 
 void skills()
 {
-shoot();
+  shoot();
 }
 
 void back()
 {
   shoot();
 }
-//program red first then tweak blue if it doesnt look. look at micha's repo for the vartion of each side
+//program red first then tweak blue if it doesnt work. look at micha's repo for the vartion of each side
 void front()
 {
-  ballIn(2000);
-  drivePID(48);
-  drivePID(-24);
+  shoot();
 }
 
 void autonomous()
-{ /*
+{
   if(autonClose.get_value())
   {
     front();
@@ -32,14 +31,13 @@ void autonomous()
   {
     back();
   }
-  else
+  else if(skill.get_value())
   {
     skills();
-  } */
-turnPID(90);
-shoot();
-ballIn(2000);
-drivePID(-56);
-
-
+  }
+  else
+  {
+    right(0);
+    left(0);
+  }
 }

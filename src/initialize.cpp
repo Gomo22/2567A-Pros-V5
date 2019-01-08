@@ -62,6 +62,11 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {
+  char lblstring[30] = "";
+
+  lv_obj_t * auton_scr  = lv_page_create(NULL,NULL);
+  lv_scr_load(auton_scr);
+
   lv_obj_t * btnBlueFlag = lv_btn_create(lv_scr_act(), NULL);
   lv_btn_set_action(btnBlueFlag ,LV_BTN_ACTION_PR, btn_rel_blueFlag);
   lv_obj_set_free_num(btnBlueFlag, 1);
