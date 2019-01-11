@@ -60,6 +60,10 @@
 extern Controller controller;
 extern Controller controller2;
 extern ADIDigitalIn mirror;
+extern ADIDigitalIn autonClose;
+extern ADIDigitalIn autonFar;
+extern ADIDigitalIn skill;
+
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a

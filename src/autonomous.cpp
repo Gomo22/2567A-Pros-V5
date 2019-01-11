@@ -8,17 +8,19 @@ ADIDigitalIn skill('D');
 
 void skills()
 {
+  suck(600);
   shoot();
 }
 
 void back()
 {
+  suck(-600);
   shoot();
 }
 //program red first then tweak blue if it doesnt work. look at micha's repo for the vartion of each side
 void front()
 {
-  shoot();
+  turnPID(90);
 }
 
 void autonomous()

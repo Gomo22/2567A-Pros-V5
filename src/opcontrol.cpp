@@ -76,12 +76,14 @@ void opcontrol() {
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labellift, lblstring);
 
-
+		if(controller.get_digital(DIGITAL_LEFT) && !competition::is_connected())
+		autonomous();
 		driveOP();
     puncherOP();
     intakeOP();
 		liftOP();
 		clawOP();
+		printf("%d\n", autonFar.get_value());
 		delay(20);
 	}
 }
