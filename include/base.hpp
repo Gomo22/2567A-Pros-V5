@@ -8,6 +8,7 @@ void drive(int inches);
 void driveOP();
 void drivePID(int inches);
 void turnPID(int deg);
+void variableSpeedDrive(int inches , int speed);
 void right(int vel);
 void left(int vel);
 void setCurrent(int current);

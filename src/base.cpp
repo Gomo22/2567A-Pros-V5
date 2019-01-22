@@ -137,16 +137,29 @@ void turnPID(int deg)
  right(0);
 
 }
-void left(int vel){
+
+void left(int vel)
+{
   leftDrive.move(vel);
   leftDrive1.move(vel);
 }
 
-void right(int vel){
+void right(int vel)
+{
   rightDrive.move(vel);
   rightDrive1.move(vel);
 }
 
+void variableSpeedDrive(int inches , int speed)
+{
+  int distance = inches*(360/14.125);
+  resetDrive();
+  while(leftDrive.get_position() < distance + 10 || leftDrive.get_position() > distance - 10)
+  {
+    right(speed);
+    left(speed);
+  }
+}
 
 void resetDrive()
 {
