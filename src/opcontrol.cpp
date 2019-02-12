@@ -82,7 +82,7 @@ void opcontrol() {
     puncherOP();
     intakeOP();
 		liftOP();
-		clawOP();
+		rotateOP();
 		printf("%d\n", autonFar.get_value());
 		delay(20);
 	}

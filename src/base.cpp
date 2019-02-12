@@ -178,7 +178,111 @@ void setSpeed(int speed)
 {
   maxspeed = speed;
 }
+
+void untilAtDistance()
+{
+  while(!((leftDrive.get_position() < setdistance+5) && (leftDrive.get_position() > setdistance-5)))
+    {
+      delay(20);
+    }
+}
+
+void leftSlew(int slewSpeed)
+{
+  int step;
+  static int speed = 0;
+  if(abs(speed) < abs(slewSpeed))
+  {
+    step = 5;
+  }
+  else
+  {
+    step = 256; // no slew
+  }
+
+
+  if(speed < slewSpeed - step)
+  {
+    speed += step;
+  }
+  else if(speed > slewSpeed + step)
+  {
+    speed -= step;
+  }
+  else
+  {
+    speed = slewSpeed;
+  }
+
+   left(speed);
+}
+
+void rightSlew(int slewSpeed)
+{
+  int step;
+  static int speed = 0;
+  if(abs(speed) < abs(slewSpeed))
+  {
+    step = 5;
+  }
+  else
+  {
+    step = 256; // no slew
+  }
+
+
+  if(speed < slewSpeed - step)
+  {
+    speed += step;
+  }
+  else if(speed > slewSpeed + step)
+  {
+    speed -= step;
+  }
+  else
+  {
+    speed = slewSpeed;
+  }
+
+   right(speed);
+}
+
 //drive
+bool isDriving(){
+  static int count = 0;
+  static int last = 0;
+  static int lastTarget = 0;
+
+  int leftPos = leftDrive.get_position();
+  int rightPos = rightDrive.get_position();
+
+  int curr = (abs(leftPos) + abs(rightPos))/2;
+  int thresh = 3;
+  int target = distance;
+
+
+
+
+  if(abs(last-curr) < thresh)
+    count++;
+  else
+    count = 0;
+
+  if(target != lastTarget)
+    count = 0;
+
+  lastTarget = target;
+  last = curr;
+
+  //not driving if we haven't moved
+  if(count > 4)
+    return false;
+  else
+    return true;
+
+}
+//drive
+
 void drivePID(int inches)
 {
   resetDrive();
@@ -212,6 +316,20 @@ void drivePID(int inches)
       printf("%d\n", error);
       delay(20);
     }
+    //while(isDriving()/*leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12*/);
+}
+
+void variableSpeedDrive(int inches , int speed)
+{
+  int distance = inches*(360/14.125);
+  resetDrive();
+  while(leftDrive.get_position() < distance - 10 || leftDrive.get_position() > distance + 10)
+  {
+    rightDrive.move_velocity(speed);
+    rightDrive1.move_velocity(speed);
+    leftDrive.move_velocity(speed);
+    leftDrive1.move_velocity(speed);
+  }
 }
 
 void turnPID(int deg)
