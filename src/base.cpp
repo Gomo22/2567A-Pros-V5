@@ -1,18 +1,38 @@
 #include "main.h"
-static int maxBaseVelocity = 200;
-static int medBaseVelocity = 150;
-static int halfMaxBaseVelocity = 100;
-static int slowBaseVelocity = 50;
-static int brakeBaseVelocity = -20;
-
+static int setdistance;
+static int slant = 0;
+static int maxspeed = 127;
+int distance;
 //DEFINING MOTORS
 Motor leftDrive(11, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
 Motor leftDrive1(12, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
-
 Motor rightDrive(13, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 Motor rightDrive1(14, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
 
+/************************************LCD STUFF***********************************************/
+int getDistance()
+{
+  return leftDrive.get_position();
+}
+
+int getBatteryLevel()
+{
+  return battery::get_capacity();
+}
+
+int getRightEfficiency()
+{
+  return rightDrive.get_efficiency();
+  return rightDrive1.get_efficiency();
+}
+
+int getLeftEfficiency()
+{
+  return leftDrive.get_efficiency();
+  return leftDrive1.get_efficiency();
+}
+/************************************Driver Control***********************************************/
 int count = 1;
 void driveOP()
 {
@@ -53,6 +73,32 @@ void driveOP()
     rightDrive1.move(-controller.get_analog(ANALOG_LEFT_Y));
   }
 }
+/************************************Autonoumus STUFF***********************************************/
+void left(int vel){
+  leftDrive.move(vel);
+  leftDrive1.move(vel);
+}
+
+void right(int vel){
+  rightDrive.move(vel);
+  rightDrive1.move(vel);
+}
+
+void resetDrive()
+{
+  leftDrive.tare_position();
+  leftDrive1.tare_position();
+  rightDrive.tare_position();
+  rightDrive1.tare_position();
+}
+
+void resetAll()
+{
+  resetDrive();
+  maxspeed = 127;
+  slant = 0;
+}
+
  void setCurrent(int current)
  {
      leftDrive.set_current_limit(current);
@@ -60,48 +106,109 @@ void driveOP()
      rightDrive.set_current_limit(current);
      rightDrive1.set_current_limit(current);
  }
-int getDistance()
+
+void leftSlew(int slewSpeed)
 {
-  return leftDrive.get_position();
+  int step;
+  static int speed = 0;
+  if(abs(speed) < abs(slewSpeed))
+  {
+    step = 5;
+  }
+  else
+  {
+    step = 256; // no slew
+  }
+
+  if(speed < slewSpeed - step)
+  {
+    speed += step;
+  }
+  else if(speed > slewSpeed + step)
+  {
+    speed -= step;
+  }
+  else
+  {
+    speed = slewSpeed;
+  }
+
+   left(speed);
 }
 
-int getBatteryLevel()
+void rightSlew(int slewSpeed)
 {
-  return battery::get_capacity();
+  int step;
+  static int speed = 0;
+  if(abs(speed) < abs(slewSpeed))
+  {
+    step = 5;
+  }
+  else
+  {
+    step = 256; // no slew
+  }
+
+
+  if(speed < slewSpeed - step)
+  {
+    speed += step;
+  }
+  else if(speed > slewSpeed + step)
+  {
+    speed -= step;
+  }
+  else
+  {
+    speed = slewSpeed;
+  }
+   right(speed);
 }
 
-int getRightEfficiency()
+void setSlant(int s)
 {
-  return rightDrive.get_efficiency();
-  return rightDrive1.get_efficiency();
+  if(mirror.get_value())
+  {
+    s = -s;
+  }
+   slant = s;
 }
 
-int getLeftEfficiency()
+void setSpeed(int speed)
 {
-  return leftDrive.get_efficiency();
-  return leftDrive1.get_efficiency();
+  maxspeed = speed;
 }
-
+//drive
 void drivePID(int inches)
 {
   resetDrive();
   int speed;
-  double kd = 0.8; //2x kp
-  double kp = 0.5;
+  double kd = 0.7; //2x kp
+  double kp = 0.4;
   int error;
   int derivative;
   int prevError;
-  int distance = inches*(360/14.125);
+  distance = inches*(360/14.125);
+  //do
   while(leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12)
     {
-      setCurrent(1000);
+      setCurrent(2500);
       error = distance - leftDrive.get_position();
       derivative = prevError - error;
       prevError = error;
       speed = error*kp + derivative*kd;
+
+      if(speed > maxspeed)
+     speed = maxspeed;
+   if(speed < -maxspeed)
+     speed = -maxspeed;
+     if(speed > 0 && speed < 20)
+     speed = 20;
+     if(speed < 0 && speed >-20)
+     speed = -20;
       //iniates drive motors
-      left(speed);
-      right(speed);
+      leftSlew(speed - slant);
+      rightSlew(speed + slant);
       printf("%d\n", error);
       delay(20);
     }
@@ -132,39 +239,7 @@ void turnPID(int deg)
    right(speed);
    printf("%d\n", error);
    delay(20);
- }while(abs(error) > 5);
+ }while(abs(error) > 8);
  left(0);
  right(0);
-
-}
-
-void left(int vel)
-{
-  leftDrive.move(vel);
-  leftDrive1.move(vel);
-}
-
-void right(int vel)
-{
-  rightDrive.move(vel);
-  rightDrive1.move(vel);
-}
-
-void variableSpeedDrive(int inches , int speed)
-{
-  int distance = inches*(360/14.125);
-  resetDrive();
-  while(leftDrive.get_position() < distance + 10 || leftDrive.get_position() > distance - 10)
-  {
-    right(speed);
-    left(speed);
-  }
-}
-
-void resetDrive()
-{
-  leftDrive.tare_position();
-  leftDrive1.tare_position();
-  rightDrive.tare_position();
-  rightDrive1.tare_position();
 }

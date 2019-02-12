@@ -3,7 +3,6 @@
 Motor intake(15, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
 static int maxIntakeVelocity = 200;
-static int midIntakeVelocity = 100;
 
 int getIntakeMode()
 {
@@ -20,11 +19,11 @@ void intakeOP()
 {
   if(controller.get_digital(DIGITAL_R2))
   {
-  intake.move(midIntakeVelocity);
+  intake.move(maxIntakeVelocity);
   }
   else if(controller.get_digital(DIGITAL_R1))
   {
-  intake.move(-midIntakeVelocity);
+  intake.move(-30);
   }
   else
   {

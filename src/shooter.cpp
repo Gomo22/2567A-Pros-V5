@@ -36,10 +36,16 @@ void puncherOP()
   {
   puncher.move(maxPower);
   }
-    else
+    else if(controller.get_digital(DIGITAL_L2))
     {
-      puncher.move(0);
+    puncher.move(-maxPower);
+    delay(300);
+    puncher.move(0);
     }
+  else
+  {
+    puncher.move(0);
+  }
 }
 
 void shoot()
