@@ -72,9 +72,7 @@ void opcontrol() {
     charstring = "FLeft: " + std::to_string(getDistance());
     strcpy(lblstring, charstring.c_str());
     lv_label_set_text(labelDrive, lblstring);
-    charstring = "LiftRPM: " + std::to_string(getLiftRPM());
-    strcpy(lblstring, charstring.c_str());
-    lv_label_set_text(labellift, lblstring);
+
 
 		if(controller.get_digital(DIGITAL_LEFT) && !competition::is_connected())
 		autonomous();
@@ -82,7 +80,7 @@ void opcontrol() {
     puncherOP();
     intakeOP();
 		liftOP();
-		rotateOP();
+		adjusterOP();
 		printf("%d\n", autonFar.get_value());
 		delay(20);
 	}

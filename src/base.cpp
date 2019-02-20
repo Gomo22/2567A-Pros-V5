@@ -2,7 +2,6 @@
 static int setdistance;
 static int slant = 0;
 static int maxspeed = 127;
-int distance;
 //DEFINING MOTORS
 Motor leftDrive(11, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
 Motor leftDrive1(12, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
@@ -107,64 +106,6 @@ void resetAll()
      rightDrive1.set_current_limit(current);
  }
 
-void leftSlew(int slewSpeed)
-{
-  int step;
-  static int speed = 0;
-  if(abs(speed) < abs(slewSpeed))
-  {
-    step = 5;
-  }
-  else
-  {
-    step = 256; // no slew
-  }
-
-  if(speed < slewSpeed - step)
-  {
-    speed += step;
-  }
-  else if(speed > slewSpeed + step)
-  {
-    speed -= step;
-  }
-  else
-  {
-    speed = slewSpeed;
-  }
-
-   left(speed);
-}
-
-void rightSlew(int slewSpeed)
-{
-  int step;
-  static int speed = 0;
-  if(abs(speed) < abs(slewSpeed))
-  {
-    step = 5;
-  }
-  else
-  {
-    step = 256; // no slew
-  }
-
-
-  if(speed < slewSpeed - step)
-  {
-    speed += step;
-  }
-  else if(speed > slewSpeed + step)
-  {
-    speed -= step;
-  }
-  else
-  {
-    speed = slewSpeed;
-  }
-   right(speed);
-}
-
 void setSlant(int s)
 {
   if(mirror.get_value())
@@ -179,14 +120,6 @@ void setSpeed(int speed)
   maxspeed = speed;
 }
 
-void untilAtDistance()
-{
-  while(!((leftDrive.get_position() < setdistance+5) && (leftDrive.get_position() > setdistance-5)))
-    {
-      delay(20);
-    }
-}
-
 void leftSlew(int slewSpeed)
 {
   int step;
@@ -247,89 +180,37 @@ void rightSlew(int slewSpeed)
    right(speed);
 }
 
-//drive
-bool isDriving(){
-  static int count = 0;
-  static int last = 0;
-  static int lastTarget = 0;
-
-  int leftPos = leftDrive.get_position();
-  int rightPos = rightDrive.get_position();
-
-  int curr = (abs(leftPos) + abs(rightPos))/2;
-  int thresh = 3;
-  int target = distance;
-
-
-
-
-  if(abs(last-curr) < thresh)
-    count++;
-  else
-    count = 0;
-
-  if(target != lastTarget)
-    count = 0;
-
-  lastTarget = target;
-  last = curr;
-
-  //not driving if we haven't moved
-  if(count > 4)
-    return false;
-  else
-    return true;
-
-}
-//drive
-
 void drivePID(int inches)
 {
   resetDrive();
-  int speed;
   double kd = 0.7; //2x kp
   double kp = 0.4;
-  int error;
-  int derivative;
-  int prevError;
-  distance = inches*(360/14.125);
+  int distance = inches*(360/14.125);
   //do
   while(leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12)
     {
       setCurrent(2500);
-      error = distance - leftDrive.get_position();
-      derivative = prevError - error;
-      prevError = error;
-      speed = error*kp + derivative*kd;
+      int error = distance - leftDrive.get_position();
+      int prevError = error;
+      int derivative = prevError - error;
+      int speed = error*kp + derivative*kd;
 
+      //sets max speed of motors
       if(speed > maxspeed)
      speed = maxspeed;
-   if(speed < -maxspeed)
+     if(speed < -maxspeed)
      speed = -maxspeed;
      if(speed > 0 && speed < 20)
      speed = 20;
      if(speed < 0 && speed >-20)
      speed = -20;
+
       //iniates drive motors
       leftSlew(speed - slant);
       rightSlew(speed + slant);
-      printf("%d\n", error);
+
       delay(20);
     }
-    //while(isDriving()/*leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12*/);
-}
-
-void variableSpeedDrive(int inches , int speed)
-{
-  int distance = inches*(360/14.125);
-  resetDrive();
-  while(leftDrive.get_position() < distance - 10 || leftDrive.get_position() > distance + 10)
-  {
-    rightDrive.move_velocity(speed);
-    rightDrive1.move_velocity(speed);
-    leftDrive.move_velocity(speed);
-    leftDrive1.move_velocity(speed);
-  }
 }
 
 void turnPID(int deg)

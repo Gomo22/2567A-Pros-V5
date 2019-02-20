@@ -36,37 +36,19 @@ int getPuncher()
   return puncher.get_position();
 }
 
-
 void puncherOP()
 {
   if(controller.get_digital(DIGITAL_L1))
   {
-  puncher.move(maxPower);
-  }
-    else if(controller.get_digital(DIGITAL_L2))
-    {
-    puncher.move(-maxPower);
-    delay(300);
-    puncher.move(0);
-    }
-  else
-  {
-    puncher.move(0);
+    puncher.move_velocity(200);
+    delay(550);
+    puncher.move_velocity(0);
   }
 }
-
 void shoot()
 {
   puncherPower();
   untilAtPullback();
-}
-
-void shootC()
-{
-  drivePID(0);
-  puncher.move(127);
-  delay(550);
-  puncher.move(0);
 }
 
 void shootAsync()
