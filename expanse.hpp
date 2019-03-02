@@ -1,12 +1,7 @@
-#ifndef _EXPANSION_H_
-#define _EXPANSION_H_
+#ifndef _EXPANSE_H_
+#define _EXPANSE_H_
 
-void resetLift();
 void liftOP();
-void expand(bool up, int height);
-void lowCap();
-int getLiftRPM();
-int getCurrentDraw();
-int getTemp();
-void liftre(int distance);
+void swing(int pos);
+
 #endif

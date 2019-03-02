@@ -5,10 +5,9 @@ void puncherOP();
 void puncherPower();
 void shoot();
 void shootAsync();
+void loadPuncher();
 void untilAtPullback();
 void resetPuncher();
-void loadPuncher();
 int getPuncher();
-void shootC();
 
 #endif
