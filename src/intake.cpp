@@ -1,6 +1,6 @@
 #include "main.h"
 
-Motor intake(15, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
+Motor intake(8, E_MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
 static int maxIntakeVelocity = 200;
 
@@ -17,13 +17,13 @@ int getIntakeMode()
 
 void intakeOP()
 {
-  if(controller2.get_digital(DIGITAL_R2))
+  if(controller.get_digital(DIGITAL_R1))
   {
-  intake.move(maxIntakeVelocity);
+  intake.move(-maxIntakeVelocity);
   }
-  else if(controller2.get_digital(DIGITAL_R1))
+  else if(controller.get_digital(DIGITAL_R2))
   {
-  intake.move(-30);
+  intake.move(70);
   }
   else
   {

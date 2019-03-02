@@ -8,131 +8,104 @@ ADIDigitalIn test('E');
 
 void tests()
 {
-
-//  drivePID(20);
+  shoot();
+  //drivePID(20);
   //shootC();
-  suck(1000);
-
+  //suck(1000);
 }
 void skills()
 {
-  loadPuncher();
-  suck(1500);
-  drivePID(53);
+  setSpeed(100);
+  drivePID(44);
+  suck(-400);
+  drivePID(7);
+  delay(200);
+  suck(1000);
+  delay(400);
+  setSpeed(200);
   drivePID(-53);
-  drivePID(2);
-  turnPID(88);
-  suck(300);
-  drivePID(-6);
+  drivePID(4);
+  turnPID(87);
+  drivePID(60);
   shoot();
-  suck(700);
-  drivePID(24);
-  suck(400);
-  delay(600);
+  adjust(true);
+  suck(1000);
+  delay(900);
   shoot();
-  turnPID(10);
-  suck(1300);
-  drivePID(24);
-  drivePID(-24);
+  drivePID(-9);
   turnPID(-90);
-  suck(-1500);
-  drivePID(33);
-  turnPID(-100);
-  drivePID(34);
-  delay(750);
-  drivePID(20);
+  drivePID(-8);
+  setSpeed(100);
+  drivePID(44);
+  suck(-400);
+  drivePID(10);
+  delay(200);
+  suck(1000);
+  delay(400);
+  setSpeed(200);
+  drivePID(-55);
+  drivePID(3);
   turnPID(90);
-  drivePID(29);
+  suck(800);
+  drivePID(48);
+  drivePID(-26);
+  turnPID(-93);
+  drivePID(-7);
+  suck(-1350);
+  drivePID(45);
+  setSpeed(200);
+  turnPID(60);
+  adjust(false);
+  shoot();
+  turnPID(25);
+  drivePID(30);
 }
-
 void back()
 {
-shoot();
-if(mirror.get_value())
-{
-  turnPID(-60);
-}
-else
-{
-turnPID(-65);
-}
-suck(1500);
-drivePID(50);
-drivePID(-25);
-suck(700);
-if(mirror.get_value())
-{
-  turnPID(-35);
-}
-else
-{
-  turnPID(-45);
-}
-drivePID(23);
-suck(-800);
-drivePID(12);
-drivePID(-18);
-turnPID(135);
-drivePID(22);
+
 }
 //program red first then tweak blue if it doesnt look. look at micha's repo for the vartion of each side
 void front()
 {
-  loadPuncher();
-  suck(1700);
-  drivePID(52);
+  //loadPuncher();
+  suck(2300);
+  drivePID(53);
   delay(200);
-  drivePID(-53);
-  drivePID(2);
+  drivePID(-55);
+  drivePID(4);
   if(mirror.get_value())
   {
-    turnPID(85);
+    turnPID(88);
   }
   else
   {
   turnPID(88);
   }
-  suck(300);
-  drivePID(-2);
+  drivePID(8);
+  shoot();
+  adjust(true);
+  suck(900);
+  delay(800);
   shoot();
   if(mirror.get_value())
   {
-    turnPID(7);
-  }
-  suck(700);
-  drivePID(28);
-  suck(400);
-  delay(600);
-  shoot();
-  if(mirror.get_value())
-  {
-    turnPID(15);
+    turnPID(10);
   }
   else
   {
-  turnPID(10);
+    turnPID(10);
   }
-  suck(1300);
-  drivePID(24);
+  suck(2500);
+  drivePID(47);
+  suck(1400);
   drivePID(-27);
   turnPID(-93);
-  suck(-1500);
-  drivePID(33);
-  if(mirror.get_value())
-  {
-    turnPID(60);
-  }
-  else
-  {
+  setSpeed(150);
+  suck(-1150);
+  drivePID(35);
+  setSpeed(200);
   turnPID(70);
-  }
-  drivePID(10);
-  shoot();
-  if(mirror.get_value())
-  {
-    turnPID(25);
-  }
-  drivePID(20);
+  drivePID(30);
 }
   void autonomous()
 {

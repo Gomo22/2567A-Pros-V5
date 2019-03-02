@@ -1,17 +1,18 @@
 #include "main.h"
 
-Motor lift(11, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
+Motor lift(4, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
 
 void liftOP()
 {
-  lift.set_brake_mode(MOTOR_BRAKE_HOLD);
-  if(controller.get_digital(DIGITAL_X))
+  if(controller.get_digital(DIGITAL_L1))
   {
-    lift.move_velocity(100);
+    lift.set_brake_mode(MOTOR_BRAKE_HOLD);
+    lift.move_velocity(-150);
   }
-  else if(controller.get_digital(DIGITAL_Y))
+  else if(controller.get_digital(DIGITAL_L2))
   {
-    lift.move_velocity(-100);
+    lift.set_brake_mode(MOTOR_BRAKE_COAST);
+    lift.move_velocity(150);
   }
   else
   {

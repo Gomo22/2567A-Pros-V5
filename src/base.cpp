@@ -2,11 +2,12 @@
 static int setdistance;
 static int slant = 0;
 static int maxspeed = 127;
+static int distance = 0;
 //DEFINING MOTORS
-Motor leftDrive(11, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
-Motor leftDrive1(12, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
-Motor rightDrive(13, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
-Motor rightDrive1(14, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
+Motor leftDrive(1, MOTOR_GEARSET_18, 0,  MOTOR_ENCODER_DEGREES);
+Motor leftDrive1(2, MOTOR_GEARSET_18, 0, MOTOR_ENCODER_DEGREES);
+Motor rightDrive(10, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
+Motor rightDrive1(9, MOTOR_GEARSET_18, 1, MOTOR_ENCODER_DEGREES);
 
 
 /************************************LCD STUFF***********************************************/
@@ -180,14 +181,46 @@ void rightSlew(int slewSpeed)
    right(speed);
 }
 
+bool isDriving()
+{
+  static int count = 0;
+  static int last = 0;
+  static int lastTarget = 0;
+
+  int leftPos = leftDrive.get_position();
+  int rightPos = rightDrive.get_position();
+
+  int curr = (abs(leftPos) + abs(rightPos))/2;
+  int thresh = 2;
+  int target = distance;
+
+  if(abs(last-curr) < thresh)
+    count++;
+  else
+    count = 0;
+
+  if(target != lastTarget)
+    count = 0;
+
+  lastTarget = target;
+  last = curr;
+
+  //not driving if we haven't moved
+  if(count > 5)
+    return false;
+  else
+    return true;
+}
+
+
 void drivePID(int inches)
 {
   resetDrive();
   double kd = 0.7; //2x kp
   double kp = 0.4;
-  int distance = inches*(360/14.125);
-  //do
-  while(leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12)
+  distance = inches*(360/14.125);
+  //d
+  while(isDriving())//leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12)
     {
       setCurrent(2500);
       int error = distance - leftDrive.get_position();
@@ -211,6 +244,8 @@ void drivePID(int inches)
 
       delay(20);
     }
+    leftSlew(0);
+    rightSlew(0);
 }
 
 void turnPID(int deg)
@@ -238,7 +273,7 @@ void turnPID(int deg)
    right(speed);
    printf("%d\n", error);
    delay(20);
- }while(abs(error) > 8);
+ }while(isDriving());
  left(0);
  right(0);
 }
