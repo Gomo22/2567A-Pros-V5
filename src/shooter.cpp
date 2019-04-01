@@ -1,8 +1,8 @@
 #include "main.h"
-static int maxPower = 100;
-static int pullback = 352;
+static int maxPower = 200;
+static int pullback = 360;
 static int setPullback = 0;
-Motor puncher(7, E_MOTOR_GEARSET_36 , 0, MOTOR_ENCODER_DEGREES);
+Motor puncher(7, E_MOTOR_GEARSET_18 , 0, MOTOR_ENCODER_DEGREES);
 
 void untilAtPullback()
 {
@@ -38,14 +38,16 @@ int getPuncher()
 
 void puncherOP()
 {
-  if(controller2.get_digital(DIGITAL_L1))
+  if(controller.get_digital(DIGITAL_L1))
   {
   puncher.move(maxPower);
+  delay(600);
+  puncher.move(0);
   }
-    else
-    {
-      puncher.move(0);
-    }
+  else
+  {
+    puncher.move(0);
+  }
 }
 
 void shoot()

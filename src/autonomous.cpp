@@ -8,6 +8,7 @@ ADIDigitalIn test('E');
 
 void tests()
 {
+  //turnPID(90);
   shoot();
   //drivePID(20);
   //shootC();
@@ -18,26 +19,29 @@ void skills()
   setSpeed(100);
   drivePID(44);
   suck(-400);
-  drivePID(7);
-  delay(200);
+  setSpeed(50);
+  drivePID(10);
+  setSpeed(100);
+  delay(150);
   suck(1000);
   delay(400);
   setSpeed(200);
-  drivePID(-53);
+  drivePID(-56);
   drivePID(4);
-  turnPID(87);
-  drivePID(60);
+  turnPID(90);
+  drivePID(60); //60 with wd40
   shoot();
   adjust(true);
   suck(1000);
   delay(900);
   shoot();
-  drivePID(-9);
+  drivePID(-7);
   turnPID(-90);
   drivePID(-8);
   setSpeed(100);
   drivePID(44);
   suck(-400);
+  setSpeed(50);
   drivePID(10);
   delay(200);
   suck(1000);
@@ -45,8 +49,8 @@ void skills()
   setSpeed(200);
   drivePID(-55);
   drivePID(3);
-  turnPID(90);
-  suck(800);
+  turnPID(93);
+  suck(1700);
   drivePID(48);
   drivePID(-26);
   turnPID(-93);
@@ -54,57 +58,115 @@ void skills()
   suck(-1350);
   drivePID(45);
   setSpeed(200);
-  turnPID(60);
+  turnPID(65);
   adjust(false);
   shoot();
-  turnPID(25);
+  turnPID(24);
   drivePID(30);
+  drivePID(-10);
+  turnPID(-190);
+  drivePID(38);
+  turnPID(23);
+  setSpeed(75);
+  drivePID(24);
+  setSpeed(200);
+  suck(1200);
+  driveHard(23);
+  delay(500);
+  turnPID(90);
+  delay(500);
+  drivePID(5);
+  suck(1500);
+  driveHard(50);
 }
 void back()
 {
-
+  shoot();
+  turnPID(-65);
+  drivePID(-9);
+  suck(2300);
+  drivePID(53);
+  suck(1500);
+  drivePID(-12);
+  if(mirror.get_value())
+  {
+    turnPID(59);
+  }
+  else
+  {
+  turnPID(56);
+  }
+  suck(900);
+  delay(2500);
+  shoot();
+  turnPID(25);
+  drivePID(8);
+  driveHard(24);
+  /*
+  setSpeed(200);
+  suck(2300);
+  drivePID(57);
+  suck(600);
+  drivePID(-4);
+  turnPID(67);
+  delay(4000);
+  shoot();
+  adjust(false);
+  suck(900);
+  delay(1500);
+  shoot();
+  drivePID(-14);
+  turnFastPID(35);
+  drivePID(15);
+  */
 }
 //program red first then tweak blue if it doesnt look. look at micha's repo for the vartion of each side
 void front()
 {
   //loadPuncher();
+  setSpeed(200);
   suck(2300);
   drivePID(53);
-  delay(200);
-  drivePID(-55);
-  drivePID(4);
   if(mirror.get_value())
   {
-    turnPID(88);
+    drivePID(-50);
   }
   else
   {
-  turnPID(88);
+  drivePID(-48);
   }
-  drivePID(8);
+  //drivePID(4);
+  if(mirror.get_value())
+  {
+    turnFastPID(89);
+  }
+  else
+  {
+  turnFastPID(88);
+  }
+  drivePID(9);
   shoot();
+  suck(800);
   adjust(true);
-  suck(900);
-  delay(800);
+  delay(350);
   shoot();
   if(mirror.get_value())
   {
-    turnPID(10);
+    turnFastPID(15);
   }
   else
   {
-    turnPID(10);
+    turnFastPID(15);
   }
   suck(2500);
   drivePID(47);
   suck(1400);
-  drivePID(-27);
-  turnPID(-93);
-  setSpeed(150);
-  suck(-1150);
+  drivePID(-33);
+  turnFastPID(-93);
+  suck(-1350);
   drivePID(35);
-  setSpeed(200);
-  turnPID(70);
+  turnFastPID(65);
+  shootAsync();
   drivePID(30);
 }
   void autonomous()

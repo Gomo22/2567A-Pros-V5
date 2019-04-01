@@ -1,4 +1,6 @@
 #include "main.h"
+static int maxBaseVelocity = 200;
+static int brakeBaseVelocity = -10;
 static int setdistance;
 static int slant = 0;
 static int maxspeed = 127;
@@ -191,7 +193,7 @@ bool isDriving()
   int rightPos = rightDrive.get_position();
 
   int curr = (abs(leftPos) + abs(rightPos))/2;
-  int thresh = 2;
+  int thresh = 4;
   int target = distance;
 
   if(abs(last-curr) < thresh)
@@ -206,7 +208,7 @@ bool isDriving()
   last = curr;
 
   //not driving if we haven't moved
-  if(count > 5)
+  if(count > 9)
     return false;
   else
     return true;
@@ -219,7 +221,10 @@ void drivePID(int inches)
   double kd = 0.7; //2x kp
   double kp = 0.4;
   distance = inches*(360/14.125);
-  //d
+  leftDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  leftDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
   while(isDriving())//leftDrive.get_position() < distance - 12 || leftDrive.get_position() > distance + 12)
     {
       setCurrent(2500);
@@ -227,7 +232,6 @@ void drivePID(int inches)
       int prevError = error;
       int derivative = prevError - error;
       int speed = error*kp + derivative*kd;
-
       //sets max speed of motors
       if(speed > maxspeed)
      speed = maxspeed;
@@ -250,6 +254,10 @@ void drivePID(int inches)
 
 void turnPID(int deg)
 {
+  leftDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  leftDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
   resetDrive();
  if(mirror.get_value())
  {
@@ -276,4 +284,96 @@ void turnPID(int deg)
  }while(isDriving());
  left(0);
  right(0);
+}
+
+void turnFastPID(int deg)
+{
+  leftDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  leftDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive.set_brake_mode(MOTOR_BRAKE_COAST);
+  rightDrive1.set_brake_mode(MOTOR_BRAKE_COAST);
+  resetDrive();
+ if(mirror.get_value())
+ {
+   deg = -deg;
+ }
+ int speed;
+ // both should be higher
+ double kd = 2.0;//3.7; //4x kp
+ double kp = 0.5;//0.8;
+ int error;
+ int derivative;
+ int prevError;
+ int target = deg*3.29;
+ do{
+   //setCurrent(400);
+   error = target - ((rightDrive.get_position() - leftDrive.get_position())/2);
+   derivative = prevError - error;
+   prevError = error;
+   speed = error*kp + derivative*kd;
+   left(-speed);
+   right(speed);
+   printf("%d\n", error);
+   delay(20);
+ }while(isDriving());
+ left(0);
+ right(0);
+}
+
+void driveHard(int inches)
+{
+  leftDrive.set_brake_mode(MOTOR_BRAKE_HOLD);
+  leftDrive1.set_brake_mode(MOTOR_BRAKE_HOLD);
+  rightDrive.set_brake_mode(MOTOR_BRAKE_HOLD);
+  rightDrive1.set_brake_mode(MOTOR_BRAKE_HOLD);
+  resetDrive();
+  int distance = inches*(360/14.125);
+  if(distance > 0)
+  {
+    leftDrive.move_velocity(maxBaseVelocity);
+    leftDrive1.move_velocity(maxBaseVelocity);
+    rightDrive.move_velocity(maxBaseVelocity);
+    rightDrive1.move_velocity(maxBaseVelocity);
+
+    while(leftDrive.get_position() < distance)
+    {
+      delay(2);
+    }
+
+    leftDrive.move_velocity(brakeBaseVelocity);
+    leftDrive1.move_velocity(brakeBaseVelocity);
+    rightDrive.move_velocity(brakeBaseVelocity);
+    rightDrive1.move_velocity(brakeBaseVelocity);
+
+    delay(10);
+
+    leftDrive.move_velocity(0);
+    leftDrive1.move_velocity(0);
+    rightDrive.move_velocity(0);
+    rightDrive1.move_velocity(0);
+  }
+  if(distance < 0)
+  {
+    leftDrive.move_velocity(-maxBaseVelocity);
+    leftDrive1.move_velocity(-maxBaseVelocity);
+    rightDrive.move_velocity(-maxBaseVelocity);
+    rightDrive1.move_velocity(-maxBaseVelocity);
+
+    while(leftDrive.get_position() > distance)
+    {
+      delay(2);
+    }
+
+    leftDrive.move_velocity(-brakeBaseVelocity);
+    leftDrive1.move_velocity(-brakeBaseVelocity);
+    rightDrive.move_velocity(-brakeBaseVelocity);
+    rightDrive1.move_velocity(-brakeBaseVelocity);
+
+    delay(10);
+
+    leftDrive.move_velocity(0);
+    leftDrive1.move_velocity(0);
+    rightDrive.move_velocity(0);
+    rightDrive1.move_velocity(0);
+  }
 }

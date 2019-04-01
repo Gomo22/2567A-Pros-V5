@@ -16,6 +16,7 @@
 Controller controller(CONTROLLER_MASTER);
 Controller controller2(CONTROLLER_PARTNER);
 
+
 static lv_res_t btn_rel_puncher(lv_obj_t * btn)
 {
 	resetPuncher();
@@ -81,7 +82,7 @@ void opcontrol() {
     intakeOP();
 		liftOP();
 		adjusterOP();
-		printf("%d\n", autonFar.get_value());
+		doubleShot();
 		delay(20);
 	}
 }
